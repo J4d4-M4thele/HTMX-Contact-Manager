@@ -15,7 +15,7 @@ const contacts = [
 ];
 //getting contacts
 router.get('/contacts', (req, res) => {
-    res.send("It works!");
+    res.render('index', { contacts });
 });
 
 module.exports = router;
