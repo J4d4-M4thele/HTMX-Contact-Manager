@@ -15,9 +15,21 @@ const contacts = [
   { id: 10, name: 'Chen Yu', email: 'chen.yu@example.com' },
 ];
 
-// GET /contacts
+// getting all contacts
 router.get('/contacts', (req, res) => {
   res.render('index', { action: '', contacts, contact: {} });
+});
+
+//getting a contact by id
+router.get('/contacts/:id', (req, res) => {
+    const {id} = req.params;
+    const contact = contacts.find((c) => c.id === Number(id));
+
+    res.send(`
+    <h2>${contact.name}</h2>
+    <p><strong>Name:</strong> ${contact.name}</p>
+    <p><strong>Email:</strong> ${contact.email}</p>    
+    `);
 });
 
 module.exports = router;

@@ -15,11 +15,7 @@ html
         h1 Contact Manager
 
     section#sidebar
-      ul.contact-list
-        each contact in contacts
-          li #{contact.name}
-      div.actions
-        a(href='/contacts/new') New Contact
+        include sidebar.pug
 
     main#content
       p Select a contact
