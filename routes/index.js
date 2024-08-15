@@ -25,11 +25,15 @@ router.get('/contacts/:id', (req, res) => {
     const {id} = req.params;
     const contact = contacts.find((c) => c.id === Number(id));
 
-    res.send(`
-    <h2>${contact.name}</h2>
-    <p><strong>Name:</strong> ${contact.name}</p>
-    <p><strong>Email:</strong> ${contact.email}</p>    
-    `);
+    if(req.headers['hx-request']) {
+        res.send(`
+            <h2>${contact.name}</h2>
+            <p><strong>Name:</strong> ${contact.name}</p>
+            <p><strong>Email:</strong> ${contact.email}</p>    
+        `);
+    }else {
+        res.render('index', { action: 'show', contacts, contact });
+    }
 });
 
 module.exports = router;

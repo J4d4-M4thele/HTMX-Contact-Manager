@@ -18,6 +18,14 @@ html
         include sidebar.pug
 
     main#content
-      p Select a contact
+    case action 
+        when 'show'
+         h2 #{contact.name} 
+         p #[strong Name:] #{contact.name} 
+         p #[strong Email:] #{contact.email}
+        when 'new'
+        when 'edit'
+        default
+         p Select a contact
 
     script(src='https://unpkg.com/htmx.org@1.9.10')
