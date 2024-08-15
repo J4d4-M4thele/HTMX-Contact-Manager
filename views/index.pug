@@ -20,9 +20,7 @@ html
     main#content
     case action 
         when 'show'
-         h2 #{contact.name} 
-         p #[strong Name:] #{contact.name} 
-         p #[strong Email:] #{contact.email}
+         include contact.pug
         when 'new'
         when 'edit'
         default
