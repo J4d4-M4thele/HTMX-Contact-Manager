@@ -13,6 +13,7 @@ const contacts = [
     { id: 9, name: 'Kwame Nkrumah', email: 'kwame.nkrumah@example.com' },
     { id: 10, name: 'Chen Yu', email: 'chen.yu@example.com' },
 ];
+
 //getting contacts
 router.get('/contacts', (req, res) => {
     res.render('index', { contacts });
