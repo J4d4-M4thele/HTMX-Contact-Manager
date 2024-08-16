@@ -1,5 +1,4 @@
 const express = require('express');
-
 const router = express.Router();
 
 const contacts = [
@@ -22,23 +21,35 @@ router.get('/contacts', (req, res) => {
 
 //getting contact form
 router.get('/contacts/new', (req, res) => {
-  if(req.headers['hx-request']) {
+  if (req.headers['hx-request']) {
     res.render('form', { contact: {} });
-  }else {
+  } else {
     res.render('index', { action: 'new', contacts, contact: {} });
   }
 });
 
 //getting a contact by id
 router.get('/contacts/:id', (req, res) => {
-    const {id} = req.params;
-    const contact = contacts.find((c) => c.id === Number(id));
+  const { id } = req.params;
+  const contact = contacts.find((c) => c.id === Number(id));
 
-    if(req.headers['hx-request']) {
-        res.render('contact', { contact });
-    }else {
-        res.render('index', { action: 'show', contacts, contact });
-    }
+  if (req.headers['hx-request']) {
+    res.render('contact', { contact });
+  } else {
+    res.render('index', { action: 'show', contacts, contact });
+  }
+});
+
+//editing a user
+router.get('/contacts/:id/edit', (req, res) => {
+  const { id } = req.params;
+  const contact = contacts.find((c) => c.id === Number(id));
+
+  if (req.headers['hx-request']) {
+    res.render('form', { contact });
+  } else {
+    res.render('index', { action: 'edit', contacts, contact });
+  }
 });
 
 //creating a new contact
@@ -51,7 +62,7 @@ router.post('/contacts', (req, res) => {
 
   contacts.push(newContact);
 
-  if(req.headers['hx-request']) {
+  if (req.headers['hx-request']) {
     res.render('sidebar', { contacts }, (err, sidebarHtml) => {
       const html = `
       <main id="content" hx-swap-oob="afterbegin">
@@ -61,7 +72,7 @@ router.post('/contacts', (req, res) => {
       `;
       res.send(html);
     });
-  }else {
+  } else {
     res.render('index', { action: 'new', contacts, contact: {} });
   }
 });

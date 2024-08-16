@@ -1,10 +1,15 @@
-h2 New Contact 
+- isEditing = () => !(Object.keys(contact).length === 0);
+
+h2=isEditing ? "Edit Contact" : "New Contact" 
 
 form(
-  action='/contacts',
+  action=isEditing() ? `/update/${contact.id}?_method=PUT` : '/contacts',
   method='POST',
-  hx-post='/contacts',
+
+  hx-post=isEditing() ? false : '/contacts'
+  hx-put=isEditing() ? `/update/${contact.id}` : false,
   hx-target='#sidebar',
+  hx-push-url=isEditing() ? `/contacts/${contact.id}` : false
   hx-on::after-request='if(event.detail.successful) this.reset()'
 )
   label(for='name') Name:
