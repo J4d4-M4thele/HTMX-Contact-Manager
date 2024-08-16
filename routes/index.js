@@ -20,6 +20,15 @@ router.get('/contacts', (req, res) => {
   res.render('index', { action: '', contacts, contact: {} });
 });
 
+//creating a new contact
+router.get('/contacts/new', (req, res) => {
+  if(req.headers['hx-request']) {
+    res.render('form', { contact: {} });
+  }else {
+    res.render('index', { action: 'new', contacts, contact: {} });
+  }
+});
+
 //getting a contact by id
 router.get('/contacts/:id', (req, res) => {
     const {id} = req.params;
