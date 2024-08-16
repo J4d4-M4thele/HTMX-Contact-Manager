@@ -20,7 +20,7 @@ router.get('/contacts', (req, res) => {
   res.render('index', { action: '', contacts, contact: {} });
 });
 
-//creating a new contact
+//getting contact form
 router.get('/contacts/new', (req, res) => {
   if(req.headers['hx-request']) {
     res.render('form', { contact: {} });
@@ -40,5 +40,31 @@ router.get('/contacts/:id', (req, res) => {
         res.render('index', { action: 'show', contacts, contact });
     }
 });
+
+//creating a new contact
+router.post('/contacts', (req, res) => {
+  const newContact = {
+    id: contacts.length + 1,
+    name: req.body.name,
+    email: req.body.email,
+  };
+
+  contacts.push(newContact);
+
+  if(req.headers['hx-request']) {
+    res.render('sidebar', { contacts }, (err, sidebarHtml) => {
+      const html = `
+      <main id="content" hx-swap-oob="afterbegin">
+        <p class="flash">Contact was successfully added!</p>
+      </main>
+      ${sidebarHtml}
+      `;
+      res.send(html);
+    });
+  }else {
+    res.render('index', { action: 'new', contacts, contact: {} });
+  }
+});
+
 
 module.exports = router;
